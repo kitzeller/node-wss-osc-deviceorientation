@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>osc.js Web Sockets</title>
+        <meta charset="UTF-8" />
+        
+        <!-- socket.io -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.min.js"></script>
+    </head>
+    <body>
+
+        <button id="accelPermsButton" onclick="getAccelerometer()">Get Accelerometer Permissions</button>
+        <button id="emit" onclick="sendMessage()">Send Test Message</button>
+
+        <div id="data"></div>
+
+        <script>
+            const socket = io("https://vengeance.local:3333");
+
+            function sendMessage(){
+                console.log("sending...")
+                socket.emit('test', 'test');
+            }
+
+            function getAccelerometer(){
+            DeviceMotionEvent.requestPermission().then(response => {
+                if (response == 'granted') {
+                    // Device Orientation Listener
+                    window.addEventListener('deviceorientation',(event) => {
+
+                        // Display orientation
+                        document.getElementById("data").innerHTML = ` ${ event.alpha }, ${ event.beta }, ${ event.gamma }`;
+                        socket.emit('device', ` ${event.alpha}, ${event.beta}, ${event.gamma}`);
+                    });
+                }
+            });
+        }
+        </script>
+    </body>
+</html>
