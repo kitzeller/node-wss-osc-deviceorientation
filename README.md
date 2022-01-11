@@ -1,4 +1,4 @@
-# Socket/OSC/Device Sample - IMGD 5100
+# Socket/OSC/Device Sample
 
 1. replace `vengeance.local` with your ip or `<your-hostname>.local`
 2. install and run mkcert (for Windows I used chocolatey)
